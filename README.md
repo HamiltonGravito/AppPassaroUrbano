@@ -25,3 +25,8 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Serviços
+
+Serviços são classes (recursos, valores ou funções) comuns com objetivos bem definidos que são compartilhados pela aplicação, diferente de componentes que são usados para fazer o databiding com seu respectivo template, ou seja, faz a mediação da interface entre o usuário.
+Os serviços podem ser injetados no módulo (instancia principal da aplicação, para ser usado em qualquer lugar da mesma), nos componentes (tanto o componente quanto seus "filhos" herdam o serviço), apenas em um componente (somente o componente especifico faz uso do serviço) e também em outros serviços através do decorator (função decoradora) @Injectable.

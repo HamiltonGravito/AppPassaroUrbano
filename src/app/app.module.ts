@@ -18,6 +18,7 @@ import { RodapeComponent } from './rodape/rodape.component';
   imports: [
     BrowserModule
   ],
+  //Serviços definidos nesse nível são uados por toda a aplicação
   providers: [],
   bootstrap: [AppComponent]
 })
