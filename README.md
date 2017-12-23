@@ -30,3 +30,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 Serviços são classes (recursos, valores ou funções) comuns com objetivos bem definidos que são compartilhados pela aplicação, diferente de componentes que são usados para fazer o databiding com seu respectivo template, ou seja, faz a mediação da interface entre o usuário.
 Os serviços podem ser injetados no módulo (instancia principal da aplicação, para ser usado em qualquer lugar da mesma), nos componentes (tanto o componente quanto seus "filhos" herdam o serviço), apenas em um componente (somente o componente especifico faz uso do serviço) e também em outros serviços através do decorator (função decoradora) @Injectable.
+
+## Promises
+
+É um objeto usado para processamento assíncrono (o interpretador não se preocupa em aguardar a finalização da execução de um processo para que outro seja iniciado, ou seja, ele executa o script de forma sequêncial), seu valor pode estar disponível agora, no futuro ou nunca. Importante é saber que as promisses são capazes de formar um valor que só vai existir na aplicação depois de uma latência, então, quando esta informação estiver pronta ela pode ser tratada e devolvida para quem fez a chamada e ainda pode-se fazer uso de promises dentro de promises.

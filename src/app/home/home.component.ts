@@ -19,8 +19,22 @@ export class HomeComponent implements OnInit {
   constructor(private ofertasService: OfertasService) { }
 
   ngOnInit() {
-   this.ofertas = this.ofertasService.getOfertas();
-   console.log(this.ofertas);
-  }
+   //this.ofertas = this.ofertasService.getOfertas();
+   //console.log(this.ofertas);
+
+   //then() executa uma ação quando a promessa estiver resolvida
+   //No caso essa promessa retorna um array de Ofertas, aqui a informação ainda esta sincrona
+   //pois, a informação já esta pronta na classe ofertas.service.js
+   this.ofertasService.getOfertasPromisse().then( (ofertas: Oferta[]) => {
+    console.log("Afunção resolve() foi executada depois de três segundos");
+    this.ofertas = ofertas;
+   }
+   //Caso a promisse retorne um reject
+   //(param: any) => {console.log(param)}
+   //O método .catch() também pode ser usado no lugar do reject, onde a principal diferença é que é enviado
+   //no primeiro parametro do catch ao invés do segundo paramentro do then
+  ).catch((param: any) => {console.log(param);
+  
+  });
 
 }

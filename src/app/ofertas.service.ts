@@ -1,4 +1,5 @@
 import { Oferta } from './shared/oferta.model'
+import { setTimeout } from 'timers';
 
 export class OfertasService {
 
@@ -56,5 +57,31 @@ export class OfertasService {
 
     public getOfertas(): Array<Oferta> {
         return this.ofertas;
+    }
+
+    public getOfertasPromisse(): Promise<Oferta[]>{
+        //Promisse - Nativo do JavaScript e espera uma função de callback, que é resolve ou reject, ou seja chama uma função
+        //caso a promisse tiver sucesso ou outra caso haja falha
+        return new Promise((resolve, reject) => {
+            let deuCerto: boolean = true;
+            if(deuCerto){
+                //() => retorna resolve em uma função que será executada em 3 segundos;
+                setTimeout( () => resolve(this.ofertas), 3000);
+            }else {
+            reject({codigo_erro: 404, mensagem_erro: "Servidor não encontrado"});
+            }
+        //O then() também pode ser usado aqui e apartir dai fazer alguma tratativa e depois enviado para quem faz a solicitação da promisse,
+        //lembrando que pode existir varios then() para varias possiveis tratativas
+        }).then(( ofertas: Oferta[]) => {
+            console.log("Passou pela primeira trataiva");
+            return ofertas;
+        }).then((ofertas: Oferta[]) => {
+            return new Promise((resolve2, reject2) => {
+                setTimeout(() => {resolve2(ofertas)}, 3000);
+        });
+    }).then((ofertas: Oferta[]) => {
+        console.log("Executado após a primeira promisse, depois do retorno da mesma");
+        return ofertas;
+        
     }
 }
