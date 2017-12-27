@@ -1,9 +1,23 @@
-import { Oferta } from './shared/oferta.model'
-import { setTimeout } from 'timers';
+//Importa os modulos para que seja injetado o serviço REST
+import { Http } from '@angular/http'
+import { Injectable } from '@angular/core'
 
+import { Oferta } from './shared/oferta.model'
+
+//Usado apenas para simulação de transferência assíncrona
+//import { setTimeout } from 'timers';
+
+//Importe para converter um observable em promise
+import 'rxjs/add/operator/toPromise'
+
+//Decora a classe para que se possa fazer requisições a API
+@Injectable()
 export class OfertasService {
 
+    constructor(private http: Http) {}
 
+    /* Alterdo para que as requisições passem a ser assincronas, então,
+        a classe irá fazer requisições a API FAKE  
     public ofertas: Oferta[] = [
         {
             id: 1,
@@ -70,7 +84,7 @@ export class OfertasService {
             }else {
             reject({codigo_erro: 404, mensagem_erro: "Servidor não encontrado"});
             }
-        //O then() também pode ser usado aqui e apartir dai fazer alguma tratativa e depois enviado para quem faz a solicitação da promisse,
+        //O then() também pode ser usado aqui e apartir dai fazer alguma tratativa e depois enviar para quem faz a solicitação da promisse,
         //lembrando que pode existir varios then() para varias possiveis tratativas
         }).then(( ofertas: Oferta[]) => {
             console.log("Passou pela primeira trataiva");
@@ -83,5 +97,16 @@ export class OfertasService {
         console.log("Executado após a primeira promisse, depois do retorno da mesma");
         return ofertas;
         
+    } */
+
+    public getOfertasPromise(): Promise<Oferta[]>{
+        //Efetuar uma requisição http, composto pela variavel do tipo HTTP
+        //O método ou verbo neste caso GET e o caminho que a API responde, até
+        //esta parte é retornado um observable
+       return this.http.get('http://localhost:3000/ofertas')
+        //Converte o observable para uma promise
+        .toPromise().
+        //Recupera a resposta da promessa gerada e o json() faz com que o objeto retornado seja um objeto literal
+        then((resposta: any) => resposta.json());
     }
 }

@@ -1,11 +1,14 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser'
+import { NgModule } from '@angular/core'
+
+//Importa o modulo do HTTP para requisições REST
+import { HttpModule } from '@angular/http'
 
 
-import { AppComponent } from './app.component';
-import { TopoComponent } from './topo/topo.component';
-import { HomeComponent } from './home/home.component';
-import { RodapeComponent } from './rodape/rodape.component';
+import { AppComponent } from './app.component'
+import { TopoComponent } from './topo/topo.component'
+import { HomeComponent } from './home/home.component'
+import { RodapeComponent } from './rodape/rodape.component'
 
 
 @NgModule({
@@ -16,7 +19,8 @@ import { RodapeComponent } from './rodape/rodape.component';
     RodapeComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpModule
   ],
   //Serviços definidos nesse nível são uados por toda a aplicação
   providers: [],

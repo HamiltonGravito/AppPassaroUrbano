@@ -23,10 +23,12 @@ export class HomeComponent implements OnInit {
    //console.log(this.ofertas);
 
    //then() executa uma ação quando a promessa estiver resolvida
+   
    //No caso essa promessa retorna um array de Ofertas, aqui a informação ainda esta sincrona
-   //pois, a informação já esta pronta na classe ofertas.service.js
-   this.ofertasService.getOfertasPromisse().then( (ofertas: Oferta[]) => {
-    console.log("Afunção resolve() foi executada depois de três segundos");
+   //pois, a informação já esta pronta na classe ofertas.service.js (Obs.: Antes de comentar a classe)
+   //Depois da API FAKE construída este método é assincrono
+   this.ofertasService.getOfertasPromise().then( (ofertas: Oferta[]) => {
+    //console.log("A função resolve() foi executada depois de três segundos");
     this.ofertas = ofertas;
    }
    //Caso a promisse retorne um reject
@@ -37,4 +39,5 @@ export class HomeComponent implements OnInit {
   
   });
 
+}
 }
