@@ -34,3 +34,7 @@ Os serviços podem ser injetados no módulo (instancia principal da aplicação,
 ## Promises
 
 É um objeto usado para processamento assíncrono (o interpretador não se preocupa em aguardar a finalização da execução de um processo para que outro seja iniciado, ou seja, ele executa o script de forma sequêncial), seu valor pode estar disponível agora, no futuro ou nunca. Importante é saber que as promisses são capazes de formar um valor que só vai existir na aplicação depois de uma latência, então, quando esta informação estiver pronta ela pode ser tratada e devolvida para quem fez a chamada e ainda pode-se fazer uso de promises dentro de promises.
+
+## Rotas
+
+Permitem fazer um apontamento de uma determinada URL para um determinado componente da aplicação (configura a página que será exibida ao usuário).

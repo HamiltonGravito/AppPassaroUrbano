@@ -103,10 +103,16 @@ export class OfertasService {
         //Efetuar uma requisição http, composto pela variavel do tipo HTTP
         //O método ou verbo neste caso GET e o caminho que a API responde, até
         //esta parte é retornado um observable
-       return this.http.get('http://localhost:3000/ofertas')
+       return this.http.get('http://localhost:3000/ofertas?destaque=true')
         //Converte o observable para uma promise
         .toPromise().
         //Recupera a resposta da promessa gerada e o json() faz com que o objeto retornado seja um objeto literal
         then((resposta: any) => resposta.json());
+    }
+
+    public getOfertasPorCategoria(categoria: string) : Promise<Array<Oferta>>{
+        return this.http.get(`http://localhost:3000/ofertas?categoria=${categoria}`)
+        .toPromise()
+        .then((resposta: any) => resposta.json());
     }
 }
