@@ -35,8 +35,8 @@ export class HomeComponent implements OnInit {
    //(param: any) => {console.log(param)}
    //O método .catch() também pode ser usado no lugar do reject, onde a principal diferença é que é enviado
    //no primeiro parametro do catch ao invés do segundo paramentro do then
-  ).catch((param: any) => {console.log(param);
-  
+  ).catch((erro: any) => {
+    console.log(erro.status);
   });
 
 }
