@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core'
 
 import { Oferta } from './shared/oferta.model'
 
+import { URL_API } from './app.api'
+
 //Usado apenas para simulação de transferência assíncrona
 //import { setTimeout } from 'timers';
 
@@ -103,7 +105,7 @@ export class OfertasService {
         //Efetuar uma requisição http, composto pela variavel do tipo HTTP
         //O método ou verbo neste caso GET e o caminho que a API responde, até
         //esta parte é retornado um observable
-       return this.http.get('http://localhost:3000/ofertas?destaque=true')
+       return this.http.get(`${URL_API}?destaque=true`)
         //Converte o observable para uma promise
         .toPromise().
         //Recupera a resposta da promessa gerada e o json() faz com que o objeto retornado seja um objeto literal
@@ -111,13 +113,13 @@ export class OfertasService {
     }
 
     public getOfertasPorCategoria(categoria: string) : Promise<Array<Oferta>>{
-        return this.http.get(`http://localhost:3000/ofertas?categoria=${categoria}`)
+        return this.http.get(`${URL_API}?categoria=${categoria}`)
         .toPromise()
         .then((resposta: any) => resposta.json());
     }
 
     public getOfertaPorId(id: number) : Promise<Oferta>{
-        return this.http.get(`http://localhost:3000/ofertas?id=${id}`)
+        return this.http.get(`${URL_API}?id=${id}`)
         .toPromise()
         .then((resposta: any) => {
            return resposta.json()[0];

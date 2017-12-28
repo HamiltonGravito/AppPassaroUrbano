@@ -1,5 +1,9 @@
 <div class="container">
-  <div class="oferta">
+  <!-- Para a correção de erros no processo de ciclo de vida do componente
+  ele começa com um atributo oferta sendo undefined e só depois que a promise é
+  resolvida que ele recebe os valores adequados, então, usando o ngIf, a pagina só irá
+  carregar após o atributo oferta ter um valor diferente de undefined -->
+  <div class="oferta" *ngIf="oferta !== undefined">
 
     <div class="row">
       <div class="col">
@@ -43,4 +47,22 @@
     </div>
 
   </div>
+
+  <div class="row" style="margin-top: 25px; margin-bottom: 150px">
+      <div class="col">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#como-usar" role="tab" aria-selected="true">Como Usar</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#onde-fica" role="tab" aria-selected="false">Onde Fica</a>
+              </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="como-usar" role="tabpanel" >Como Usar</div>
+              <div class="tab-pane fade" id="onde-fica" role="tabpanel" >Onde fica</div>
+            </div>    
+      </div>
+    </div>
+
 </div>

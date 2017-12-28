@@ -16,7 +16,9 @@ import { RodapeComponent } from './rodape/rodape.component'
 import { RestaurantesComponent } from './restaurantes/restaurantes.component'
 import { DiversaoComponent } from './diversao/diversao.component'
 import { Router } from '@angular/router'
-import { OfertaComponent } from './oferta/oferta.component'
+import { OfertaComponent } from './oferta/oferta.componen;
+import { ComoUsarComponent } from './oferta/como-usar/como-usar.componen;
+import { OndeFicaComponent } from './oferta/onde-fica/onde-fica.component't't'
 
 
 @NgModule({
@@ -27,7 +29,9 @@ import { OfertaComponent } from './oferta/oferta.component'
     RodapeComponent,
     RestaurantesComponent,
     DiversaoComponent,
-    OfertaComponent
+    OfertaCompone,
+    ComoUsarComponent,
+    OndeFicaComponentnt
   ],
   imports: [
     BrowserModule,
