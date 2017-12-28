@@ -8,7 +8,12 @@
             </a>
         </div>
         <div class="col-md-6">
-          <input type="text" class="form-control" placeholder="Pesquise por Ofertas...">
+          <!-- Event biding (keyup) - Assim que uma tecla for prescionada e liberada será disparado um evento (pesquisa)
+          que recebe como parãmetro os dados do proprio evento, pode-se também criar uma variável com # e essa variável
+        passa a referenciar esse componete ou input, passando aoinvés do $event uma variável já com seu value -->
+          <input type="text" class="form-control" placeholder="Pesquise por Ofertas..." 
+          #termoDaPesquisa
+          (keyup)="pesquisa(termoDaPesquisa.value)">
         </div>
         <div class="col-md-2">
             <a a href="#"><img src="/assets/carrinho.png" /></a>

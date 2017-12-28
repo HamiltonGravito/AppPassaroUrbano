@@ -11,6 +11,9 @@ import { URL_API } from './app.api'
 
 //Importe para converter um observable em promise
 import 'rxjs/add/operator/toPromise'
+import { Observable } from 'rxjs/Observable';
+
+import 'rxjs/add/operator/map'
 
 //Decora a classe para que se possa fazer requisições a API
 @Injectable()
@@ -146,5 +149,14 @@ export class OfertasService {
             //o id correto trará a string desejada
             return resposta.json()[0].descricao;
         })
+    }
+
+    //Requisição das ofertas baseadas no campo de busca, onde o método recebe
+    //uma string e retorna um observable
+    public pesquisaOfertas(termo: string): Observable<Oferta[]>{
+        return this.http.get(`${URL_API}/ofertas?descricao_oferta=${termo}`)
+        //Não converto mais para uma promise, porém, o map recupera cada um dos eventos disparados na stream do observable
+        //e a partir daí ele pode ser tratado
+        .map((resposta: any) => resposta.json())
     }
 }
