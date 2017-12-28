@@ -38,3 +38,11 @@ Os serviços podem ser injetados no módulo (instancia principal da aplicação,
 ## Rotas
 
 Permitem fazer um apontamento de uma determinada URL para um determinado componente da aplicação (configura a página que será exibida ao usuário).
+
+## Programação Reativa
+
+Consiste em um paradigma de programação voltado a fluxos (streams) a partir de processamentos assíncronos. Os principais pilares são:
+Responsividade: Aplicações ofereçam interações ricas e em tempo real aos usuários.
+Resiliência: Aplicações sejam capazes de reagir e se recuperarem de falhas de software, hardware e conectividade.
+Elasticidade: Uso de múltiplos núcleos e servidores.
+Orientado a Mensagens: Ao invés de compor aplicações de multiplos threads síncronos elas devem ser capazes de gerênciar eventos assíncronos e não bloqueantes.
