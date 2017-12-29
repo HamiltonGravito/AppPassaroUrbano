@@ -1,5 +1,6 @@
-//Importa os modulos para que seja injetado o serviço REST
-import { Http } from '@angular/http'
+//Http Importa os modulos para que seja injetado o serviço REST
+//Reponse serve para inferir um tipo correto de resposta da API
+import { Http, Response } from '@angular/http'
 import { Injectable } from '@angular/core'
 
 import { Oferta } from './shared/oferta.model'
@@ -11,9 +12,10 @@ import { URL_API } from './app.api'
 
 //Importe para converter um observable em promise
 import 'rxjs/add/operator/toPromise'
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable'
 
 import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/retry'
 
 //Decora a classe para que se possa fazer requisições a API
 @Injectable()
@@ -112,19 +114,19 @@ export class OfertasService {
         //Converte o observable para uma promise
         .toPromise().
         //Recupera a resposta da promessa gerada e o json() faz com que o objeto retornado seja um objeto literal
-        then((resposta: any) => resposta.json());
+        then((resposta: Response) => resposta.json());
     }
 
     public getOfertasPorCategoria(categoria: string) : Promise<Array<Oferta>>{
         return this.http.get(`${URL_API}/ofertas?categoria=${categoria}`)
         .toPromise()
-        .then((resposta: any) => resposta.json());
+        .then((resposta: Response) => resposta.json());
     }
 
     public getOfertaPorId(id: number) : Promise<Oferta>{
         return this.http.get(`${URL_API}/ofertas?id=${id}`)
         .toPromise()
-        .then((resposta: any) => {
+        .then((resposta: Response) => {
            return resposta.json()[0];
         });
     }
@@ -132,7 +134,7 @@ export class OfertasService {
     public getComoUsarOfertaPorId(id: number): Promise<string>{
         return this.http.get(`${URL_API}/como-usar?id=${id}`)
         .toPromise()
-        .then((resposta: any) => {
+        .then((resposta: Response) => {
             return resposta.json()[0].descricao;
         });
     }
@@ -143,7 +145,7 @@ export class OfertasService {
         return this.http.get(`${URL_API}/onde-fica?id=${id}`)
         .toPromise()
         //Resolvo a promise
-        .then((resposta: any) => {
+        .then((resposta: Response) => {
             //Como meu objeto espera receber apenas uma string e não um array
             //retorno a primeira posicao, que quando acessar o método passando
             //o id correto trará a string desejada
@@ -154,9 +156,12 @@ export class OfertasService {
     //Requisição das ofertas baseadas no campo de busca, onde o método recebe
     //uma string e retorna um observable
     public pesquisaOfertas(termo: string): Observable<Oferta[]>{
-        return this.http.get(`${URL_API}/ofertas?descricao_oferta=${termo}`)
+        //_like (pesquisa por aproximação assim como no SQL)
+        return this.http.get(`${URL_API}/ofertas?descricao_oferta_like=${termo}`)
+        //Quer dizer que o cliente irá fazer 10 tentativas de conexão ao serviço
+        .retry(10)
         //Não converto mais para uma promise, porém, o map recupera cada um dos eventos disparados na stream do observable
-        //e a partir daí ele pode ser tratado
-        .map((resposta: any) => resposta.json())
+        //e transforma em dados mais simples
+        .map((resposta: Response) => resposta.json());
     }
 }

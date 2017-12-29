@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 import { OfertasService } from '../ofertas.service'
+import { Observable } from 'rxjs/Observable';
+
+import { Oferta } from '../shared/oferta.model'
 
 @Component({
   selector: 'apu-topo',
@@ -9,6 +12,8 @@ import { OfertasService } from '../ofertas.service'
   providers: [OfertasService]
 })
 export class TopoComponent implements OnInit {
+
+  public ofertas: Observable<Oferta[]>;
 
   constructor(private ofertasService: OfertasService) { }
 
@@ -23,7 +28,16 @@ export class TopoComponent implements OnInit {
     //Precisamos recuperar o atributo target e seu valor e para isso usá-se 
     //HTMLInputElement que identifica que trata-se de um inputHTML
    //console.log((<HTMLInputElement>evento.target).value)
-   console.log(termoDeBusca);
+   
+   this.ofertas = this.ofertasService.pesquisaOfertas(termoDeBusca);
+   this.ofertas.subscribe(
+     //Primeiro evento do stream
+    (data: Oferta[]) => {console.log(data)},
+    //Erro do subscribe
+    (erro: any) => {console.log('Erro Status: ', erro.status)},
+    //Indica o que deve ser feito ao concluir o stream
+    () => {console.log("Fluxo completo")}
+   );
   }
 
 }
