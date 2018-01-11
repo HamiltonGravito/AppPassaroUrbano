@@ -1,7 +1,11 @@
 <div class="fixed-bottom">
   <div class="row">
     <div class="container">
-      <span>Termos de uso | Política de Privacidade</span>
+      <span>Termos de uso | Política de Privacidade
+        <div class="data">
+          {{ dataAtual | date: 'dd/MM/yyyy' }}
+        </div>
+      </span>
     </div>
   </div>
 </div>

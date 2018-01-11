@@ -52,3 +52,7 @@ Orientado a Mensagens: Ao invés de compor aplicações de multiplos threads sí
 Observable é um recurso usado para programação reativa. Ele é o recurso retornado pelo métogo get(), tanto que é do tipo "Response", onde, um cliente faz uma requisição a um servidor e a resposta do servidor integra o Observable que por sua vez emite um evento e o valor desse evento consiste em um objeto de resposta da requisição.
 Uma vez que o que realmente interessa é apenas o conteúdo da requisição usamos o método map() que transforma o valor dos eventos emitidos em um "tipo" específico de acordo com sua função de callback implementada.
 O Subscribe é a função que fica "assistindo" os eventos que são disparados e quando definimos os Handles (métodos do subscrible de dados, erro e conclusão) estamos definindo como o valor de um evento deve ser tratado.
+
+## Pipes
+
+São mecanismos de transformação de dados utilizados nos templates para produzir uma representação customizada da informação a ser exibida, ou seja, por exemplo: quando o resultado de uma String interpolation for exibida ao usuário essa pode ser customizada para que a interface se torne mais amigavél ao usuário.

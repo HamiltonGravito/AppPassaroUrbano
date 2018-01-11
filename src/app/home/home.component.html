@@ -18,7 +18,7 @@
           <!-- {{}} string interpolation para exibição dos devidos atributos -->
           <h4 class="card-title">{{ oferta.titulo }}</h4>
           <p class="card-text">{{ oferta.descricao_oferta }}</p>
-          <p class="preco">R${{ oferta.valor }}</p>
+          <p class="preco">{{ oferta.valor | currency: 'BRL' }}</p>
           <!-- No array do routerLink, passa-se a rota e depois o parâmetro -->
           <a [routerLink]="['/oferta', oferta.id]" class="btn btn-outline-primary">Ver oferta</a>
         </div>

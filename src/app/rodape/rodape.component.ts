@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RodapeComponent implements OnInit {
 
+  public dataAtual = new Date();
+
   constructor() { }
 
   ngOnInit() {
