@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 
 //Usado para pegar o objeto de rotas
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Params } from '@angular/router'
 
 //Importar a classe do serviço
 import { OfertasService } from '../../ofertas.service'
@@ -22,10 +22,15 @@ export class ComoUsarComponent implements OnInit {
     private ofertasService: OfertasService){ }
 
   ngOnInit() {
-    this.ofertasService.getComoUsarOfertaPorId(this.route.parent.snapshot.params['id'])
+
+    this.route.parent.params.subscribe((parametros: Params) => {
+      this.ofertasService.getComoUsarOfertaPorId(parametros.id)
     .then((resposta: any) => {
       this.comoUsar = resposta;
-    } 
-  )}
+    })
+    });
+
+    
+  }
 
 }

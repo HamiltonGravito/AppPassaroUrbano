@@ -17,8 +17,10 @@ import '../util/rxjs-extensions'
 export class TopoComponent implements OnInit {
 
   public ofertas: Observable<Oferta[]>;
+  //Alterado para utilizar com PIPE ASYNC - Diferente do ngFor utilizando o async é possível utilizar
+  //o retorno do subscrible direto.
   //Esse atributo foi criado, pois, o *ngFor não consegue trabalhar sobre observable
-  public ofertasDatabiding: Oferta[];
+  //public ofertasDatabiding: Oferta[];
   private subjectPesquisa: Subject<string> = new Subject<string>();
 
   constructor(private ofertasService: OfertasService) { }
@@ -50,9 +52,12 @@ export class TopoComponent implements OnInit {
     //Indica o que fazer com os eventos produzidos pelo subject, lembrando que
     //a partir desse momento inicia-se um "listen" que fica escutando as alterações
     //do observable
-    this.ofertas.subscribe((ofertas: Oferta[]) => {
+    
+    //Alterado para utilizar com PIPE ASYNC
+    /*this.ofertas.subscribe((ofertas: Oferta[]) => {
       this.ofertasDatabiding = ofertas;
     });
+    */
   }
 
   public pesquisa(termoDeBusca: string) : void {
@@ -80,5 +85,11 @@ export class TopoComponent implements OnInit {
     () => {console.log("Fluxo completo")}
    );
   }*/
+
+  //Esse metodo no momento em que o observable receber um valor vazio
+  //cai para o if e retorna um array de observable vazio
+  public limpaPesquisa(): void {
+    this.subjectPesquisa.next("");
+  }
 
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 //Usado para pegar o objeto de rotas
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Params } from '@angular/router'
 
 //1ºPasso: Importar Servico
 import { OfertasService } from '../../ofertas.service'
@@ -23,13 +23,23 @@ export class OndeFicaComponent implements OnInit {
     private ofertasService: OfertasService) { }
 
   ngOnInit() {
+
+
+    this.route.parent.params.subscribe((parametros: Params) => {
+      this.ofertasService.getOndeFicaOfertaPorId(parametros.id)
+      .then((retornoPromise: string) => {
+        this.ondeFica = retornoPromise;
+      });
+    });
+
     //4ºPasso: Utilizar o método que retorna o serviço desejado
     //Lembrando que esse método recebe um id, que é recuperado através da rota pelo
     //parâmetro de mesmo nome "id", sendo este da rota pai (parent)
-    this.ofertasService.getOndeFicaOfertaPorId(this.route.parent.snapshot.params['id'])
+    /*this.ofertasService.getOndeFicaOfertaPorId(this.route.parent.snapshot.params['id'])
     .then((retornoPromise: string) => {
       this.ondeFica = retornoPromise;
     });
+    */
   }
 
 }

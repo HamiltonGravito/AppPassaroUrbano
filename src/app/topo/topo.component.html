@@ -14,9 +14,13 @@
         <input type="text" class="form-control" placeholder="Pesquise por Ofertas..." 
           #termoDaPesquisa
           (keyup)="pesquisa(termoDaPesquisa.value)" />
-
-          <ul class="list-group" style="position: absolute">
-            <li class="list-group-item" *ngFor="let oferta of ofertasDatabiding">{{ oferta.titulo }}</li>
+            
+          <!-- z-index - utilizado para posicionar o elemento (componente) em uma camada superior -->
+          <ul class="list-group" style="position: absolute; z-index: 999">
+            <!-- descricaoReduzida é um PIPE criado com dois parâmetros sendo o primeiro de onde a String começa e o outro onde ela termina -->
+            <li class="list-group-item" *ngFor="let oferta of ofertas | async">
+                <a [routerLink]="['/oferta', oferta.id]" (click)="limpaPesquisa()">{{ oferta.titulo | descricaoReduzida: 0 : 12 }}</a>
+            </li>
           </ul>
 
         </div>

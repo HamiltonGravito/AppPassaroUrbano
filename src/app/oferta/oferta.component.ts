@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Params } from '@angular/router'
 
 import { OfertasService } from '../ofertas.service'
 
@@ -46,10 +46,17 @@ export class OfertaComponent implements OnInit /*, OnDestroy*/ {
       //console.log(parametro.id);
     //});
 
-    this.ofertasService.getOfertaPorId(this.route.snapshot.params['id'])
-    .then((resposta: Oferta) => {
-      this.oferta = resposta;
+    //Combinação de Observable com Promisse, então, o subscrible fica escutando alguma alteração
+    //na rota e quando isso acontece ele envia uma requisição com a nova rota que é acessado pelo método
+    //getOfertasPorId
+    this.route.params.subscribe((parametros: Params) => {
+      this.ofertasService.getOfertaPorId(parametros.id)
+        .then((resposta: Oferta) => {
+        this.oferta = resposta;
+      });
     });
+
+    
 
     /* Observable
     this.route.params.subscribe(
