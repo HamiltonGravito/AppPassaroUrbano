@@ -7,6 +7,7 @@ import { OfertaComponent } from './oferta/oferta.component'
 import { Component } from '@angular/core/src/metadata/directives'
 import { OndeFicaComponent } from './oferta/onde-fica/onde-fica.component'
 import { ComoUsarComponent } from './oferta/como-usar/como-usar.component'
+import { OrdemCompraComponent } from './ordem-compra/ordem-compra.component'
 
 export const ROUTES: Routes = [
     {path: '', component: HomeComponent },
@@ -21,4 +22,5 @@ export const ROUTES: Routes = [
             {path: 'como-usar', component: ComoUsarComponent },
             {path: 'onde-fica', component: OndeFicaComponent }
         ]},
+        {path: 'ordem-compra', component: OrdemCompraComponent }
 ];
