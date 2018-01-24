@@ -76,7 +76,7 @@
           <input 
             type="text" 
             class="form-control {{ enderecoEstadoPrimitivo ? '' : (enderecoValido ? 'is-valid' : 'is-invalid') }}" 
-            placeholder="Endereço" 
+            placeholder="Alameda..., Avenida..., Rua..., Travessa... ou Praça... " 
             autocomplete="off" 
             minlength="5" 
             required
@@ -166,7 +166,12 @@
       </div>
 
       <hr />
-      <button type="submit" class="btn btn-primary btn-lg" [disabled]="formEstado">Cofirmar compra</button>
+      <!-- EventBiding de (click) que dispara o método de confirmarCompra() -->
+      <button type="button" 
+        class="btn btn-primary btn-lg" 
+        [disabled]="formEstado"
+        (click)="confirmarCompra()"
+        >Cofirmar compra</button>
     </form>
   </div>
 </div>

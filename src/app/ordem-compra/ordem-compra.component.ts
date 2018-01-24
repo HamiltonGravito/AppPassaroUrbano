@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 //Serviço - 1ºPasso: Inserir classe de Serviço
 import { OrdemCompraService } from '../ordem-compra.service'
 
+//Formar Pedido - 1ºPasso: Importar o modelo
+import { Pedido } from '../shared/pedido.model';
+
 @Component({
   selector: 'apu-ordem-compra',
   templateUrl: './ordem-compra.component.html',
@@ -11,6 +14,9 @@ import { OrdemCompraService } from '../ordem-compra.service'
   providers: [OrdemCompraService]
 })
 export class OrdemCompraComponent implements OnInit {
+
+  //Formar Pedido - 2º Passo: Instanciar um novo pedido
+  public pedido: Pedido;
 
   public endereco: string = null;
   public numero: number = null;
@@ -26,7 +32,7 @@ export class OrdemCompraComponent implements OnInit {
   public formaPagamentoValida: boolean;
 
   //Atributos de controle de estado primitivo dos campos (pristine)
-  public enderecoEstadoPrimitivo: boolean = true;;
+  public enderecoEstadoPrimitivo: boolean = true;
   public numeroEstadoPrimitivo: boolean = true;
   public complementoEstadoPrimitivo: boolean = true;
   public formaPagamentoEstadoPrimitivo: boolean = true;
@@ -42,7 +48,7 @@ export class OrdemCompraComponent implements OnInit {
     this.endereco = endereco;
     this.enderecoEstadoPrimitivo = false;
     //validação do endereco
-    if(this.endereco.length > 4 && this.endereco.includes("Rua") || this.endereco.includes("Avenida") || this.endereco.includes("Travessa") || this.endereco.includes("Praça")){
+    if(this.endereco.length > 4 && this.endereco.includes("Rua") || this.endereco.includes("Avenida") || this.endereco.includes("Travessa") || this.endereco.includes("Praça") || this.endereco.includes("Alameda")){
       this.enderecoValido = true;
     } else {
       this.enderecoValido = false;
@@ -99,6 +105,33 @@ export class OrdemCompraComponent implements OnInit {
     } else {
       this.formEstado = 'disabled';
     }
+  }
+
+  public confirmarCompra(): void {
+    this.pedido = new Pedido(
+      this.endereco,
+      this.numero,
+      this.complemento,
+      this.formaPagamento
+    );
+    this.ordemCompraService.efetivarCompra(this.pedido)
+    .subscribe();
+  }
+
+  public iniciarComponentes(): void {
+    this.enderecoValido = false;
+    this.enderecoEstadoPrimitivo = true;
+    this.endereco = "";
+    this.numeroValido = false;
+    this.numeroEstadoPrimitivo = true;
+    this.numero = null;
+    this.complementoValido = false;
+    this.complementoEstadoPrimitivo = true;
+    this.complemento = "";
+    this.formaPagamentoValida = false;
+    this.formaPagamentoEstadoPrimitivo = true;
+    this.formaPagamento = "";
+    this.formEstado = 'disabled';
   }
 
 }

@@ -22,11 +22,11 @@
                 <a [routerLink]="['/oferta', oferta.id]" (click)="limpaPesquisa()">{{ oferta.titulo | descricaoReduzida: 0 : 12 }}</a>
             </li>
           </ul>
-
+          <div class="col-md-2">
+            <a a href="#"><img src="/assets/carrinho.png" /></a>
+          </div>
         </div>
-        <div class="col-md-2">
-          <a a href="#"><img src="/assets/carrinho.png" /></a>
-        </div>
+       
       </div>
     </div>
   </nav>
