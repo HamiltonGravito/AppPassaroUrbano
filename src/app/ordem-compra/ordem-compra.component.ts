@@ -15,6 +15,8 @@ import { Pedido } from '../shared/pedido.model';
 })
 export class OrdemCompraComponent implements OnInit {
 
+  public idPedidoCompra: number;
+
   //Formar Pedido - 2º Passo: Instanciar um novo pedido
   public pedido: Pedido;
 
@@ -115,7 +117,9 @@ export class OrdemCompraComponent implements OnInit {
       this.formaPagamento
     );
     this.ordemCompraService.efetivarCompra(this.pedido)
-    .subscribe();
+    .subscribe((idPedido: number) => {
+      this.idPedidoCompra = idPedido});
+    this.iniciarComponentes();
   }
 
   public iniciarComponentes(): void {

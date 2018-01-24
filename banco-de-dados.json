@@ -187,11 +187,18 @@
   ],
   "pedidos": [
     {
-      "endereco": "Rua a ",
+      "endereco": "Rua b",
       "numero": "12",
-      "complemento": "a",
+      "complemento": "cas",
       "formaPagamento": "dinheiro",
       "id": 1
+    },
+    {
+      "endereco": "Rua a ",
+      "numero": "123",
+      "complemento": "casa a ",
+      "formaPagamento": "dinheiro",
+      "id": 2
     }
   ]
 }

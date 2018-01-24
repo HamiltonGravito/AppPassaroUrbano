@@ -14,7 +14,7 @@ export class OrdemCompraService {
     constructor(private http: Http){}
 
     //Retorna um Observable... Obs.: Os métodos HTTP retornam um Observable
-    public efetivarCompra(pedido: Pedido): Observable<any>{
+    public efetivarCompra(pedido: Pedido): Observable<number>{
 
         let headers: Headers = new Headers();
 
@@ -32,7 +32,8 @@ export class OrdemCompraService {
          //Espera receber um objeto literal que tenha as definições dos parametros da requisição
          new RequestOptions({ headers: headers })
         )
-        //Transforma o 'Response' do Observable no conteúdo que enviaemos para API
-        .map((resposta: Response) => console.log(resposta.json()));
+        //Transforma o 'Response' do Observable no conteúdo que enviamos para API, além de simplificar o retorno em JSON
+        //e neste caso retorna apenas o id do objeto
+        .map((resposta: Response) => resposta.json().id);
     }
 }

@@ -22,7 +22,8 @@ import { OndeFicaComponent } from './oferta/onde-fica/onde-fica.component'
 import { OrdemCompraComponent } from './ordem-compra/ordem-compra.component'
 
 //PIPE
-import { DescricaoReduzida } from './util/descricao-reduzida.pipe'
+import { DescricaoReduzida } from './util/descricao-reduzida.pipe';
+import { OrdemCompraSucessoComponent } from './ordem-compra-sucesso/ordem-compra-sucesso.component'
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { DescricaoReduzida } from './util/descricao-reduzida.pipe'
     ComoUsarComponent,
     OndeFicaComponent,
     DescricaoReduzida,
-    OrdemCompraComponent
+    OrdemCompraComponent,
+    OrdemCompraSucessoComponent
   ],
   imports: [
     BrowserModule,
