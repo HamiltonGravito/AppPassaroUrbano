@@ -56,3 +56,7 @@ O Subscribe é a função que fica "assistindo" os eventos que são disparados e
 ## Pipes
 
 São mecanismos de transformação de dados utilizados nos templates para produzir uma representação customizada da informação a ser exibida, ou seja, por exemplo: quando o resultado de uma String interpolation for exibida ao usuário essa pode ser customizada para que a interface se torne mais amigavél ao usuário.
+
+## Template Forms
+
+O Angular cria um objeto que representa o estado do formulário e dos campos do formulário no DOM. Então, este objeto pode ser utilizado tanto do lado do template como da classe do component.

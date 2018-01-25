@@ -9,6 +9,8 @@ import { RouterModule } from '@angular/router'
 //Importa a constante ROUTES com as rotas definidas
 import { ROUTES } from './app.routes'
 
+import { FormsModule } from '@angular/forms'
+
 import { AppComponent } from './app.component'
 import { TopoComponent } from './topo/topo.component'
 import { HomeComponent } from './home/home.component'
@@ -43,6 +45,7 @@ import { OrdemCompraSucessoComponent } from './ordem-compra-sucesso/ordem-compra
   imports: [
     BrowserModule,
     HttpModule,
+    FormsModule,
     //forRoot - Mapeamento GLOBAL
     //forChild - Rotas Internas de Componentes
     RouterModule.forRoot(ROUTES)
