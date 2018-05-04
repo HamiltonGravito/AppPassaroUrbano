@@ -59,4 +59,4 @@ São mecanismos de transformação de dados utilizados nos templates para produz
 
 ## Template Forms
 
-O Angular cria um objeto que representa o estado do formulário e dos campos do formulário no DOM. Então, este objeto pode ser utilizado tanto do lado do template como da classe do component.
+O Angular cria um objeto que representa o estado do formulário e dos campos do formulário no DOM. Então, este objeto pode ser utilizado tanto do lado do template como da classe do component. Obs.: As validações dos campos é feita através de atributos dos próprios elementos HTML definidos no Template.
