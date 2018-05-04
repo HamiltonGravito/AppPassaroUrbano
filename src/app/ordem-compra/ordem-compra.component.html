@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="ordem-compra">
+  <div class="ordem-compra" *ngIf='idPedidoCompra === undefined'>
     <!-- #formulario (variável de template) associada à diretiva ngForm, isso significa que será criado um objeto
     que apresenta o estado atual do form. -->
     <form novalidate #formulario="ngForm" (ngSubmit)="confirmarCompra()">
@@ -63,10 +63,6 @@
         </div>
       </div>
       <br />
-
-      <pre>Valido = {{ formulario.valid | json }}</pre>
-      <pre>Invalido = {{ formulario.invalid | json }}</pre>
-      <pre>{{ formulario.value | json }}</pre>
 
       <h5>Dados de entrega</h5>
       <hr />
@@ -157,4 +153,9 @@
       >Cofirmar compra</button>
     </form>
   </div>
+
+  <div class="ordem-compra" *ngIf='idPedidoCompra !== undefoned'>
+    <apu-ordem-compra-sucesso [idPedidoCompra]='idPedidoCompra'></apu-ordem-compra-sucesso>
+  </div>
+
 </div>

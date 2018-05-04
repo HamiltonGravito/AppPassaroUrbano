@@ -15,6 +15,10 @@ export class OrdemCompraComponent implements OnInit {
   //@ViewChild('variável de referencia do template')
   @ViewChild('formulario') public formulario: NgForm;
 
+  public idPedidoCompra: number;
+
+  public pedido: Pedido;
+
   constructor(private ordemCompraService: OrdemCompraService) { }
 
   ngOnInit() {
@@ -22,6 +26,16 @@ export class OrdemCompraComponent implements OnInit {
   }
 
   public confirmarCompra(): void {
-    console.log(this.formulario);
+
+    this.pedido = new Pedido(this.formulario.value.endereco,
+       this.formulario.value.numero, 
+       this.formulario.value.complemento, 
+       this.formulario.value.formaPagamento);
+
+    this.ordemCompraService.efetivarCompra(this.pedido)
+    .subscribe((idPedido: number) => {
+      this.idPedidoCompra = idPedido;
+      console.log("Pedido cadastrado com sucesso! ID do Pedido: " + idPedido);
+    });
   }
 }

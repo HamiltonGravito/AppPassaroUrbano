@@ -199,6 +199,13 @@
       "complemento": "casa a ",
       "formaPagamento": "dinheiro",
       "id": 2
+    },
+    {
+      "endereco": "Rua q",
+      "numero": "123",
+      "complemento": "b",
+      "formaPagamento": "dinheiro",
+      "id": 3
     }
   ]
 }
