@@ -47,6 +47,8 @@ import { OrdemCompraSucessoComponent } from './ordem-compra-sucesso/ordem-compra
   imports: [
     BrowserModule,
     HttpModule,
+    //A partir do momento que temos a abordagem do uso de ReactiveForms no contexto do modulo,
+    //se existir um formulário dentro do template de algum modulo o angula tentará interpretar isso. 
     ReactiveFormsModule,
     //forRoot - Mapeamento GLOBAL
     //forChild - Rotas Internas de Componentes
