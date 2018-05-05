@@ -6,6 +6,10 @@ import { HttpModule } from '@angular/http'
 
 //Importa o modulo de rotas
 import { RouterModule } from '@angular/router'
+
+//Importa o modulo para trabalhar com formularios de forma reativa
+import { ReactiveFormsModule } from '@angular/forms'
+
 //Importa a constante ROUTES com as rotas definidas
 import { ROUTES } from './app.routes'
 
@@ -43,6 +47,7 @@ import { OrdemCompraSucessoComponent } from './ordem-compra-sucesso/ordem-compra
   imports: [
     BrowserModule,
     HttpModule,
+    ReactiveFormsModule,
     //forRoot - Mapeamento GLOBAL
     //forChild - Rotas Internas de Componentes
     RouterModule.forRoot(ROUTES)

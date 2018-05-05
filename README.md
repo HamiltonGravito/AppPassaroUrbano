@@ -56,3 +56,8 @@ O Subscribe é a função que fica "assistindo" os eventos que são disparados e
 ## Pipes
 
 São mecanismos de transformação de dados utilizados nos templates para produzir uma representação customizada da informação a ser exibida, ou seja, por exemplo: quando o resultado de uma String interpolation for exibida ao usuário essa pode ser customizada para que a interface se torne mais amigavél ao usuário.
+
+## Reactive Forms
+
+Cria um formulário de modo programático, ou seja, a partir da classe do componente será criado um objeto que irá sincronizar as configurações de controle dos campos para com o template.
+Obs.: As validações dos campos são feitas através da classe do componente utilizando TS.
