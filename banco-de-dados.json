@@ -199,6 +199,69 @@
       "complemento": "casa a ",
       "formaPagamento": "dinheiro",
       "id": 2
+    },
+    {
+      "endereco": "Travessa C",
+      "numero": "52",
+      "complemento": "Fundos",
+      "formaPagamento": "dinheiro",
+      "id": 3
+    },
+    {
+      "endereco": "Travessa C",
+      "numero": "52",
+      "complemento": "Fundos",
+      "formaPagamento": "dinheiro",
+      "id": 4
+    },
+    {
+      "endereco": "Rua A",
+      "numero": "12",
+      "complemento": null,
+      "formaPagamento": "debito",
+      "id": 5
+    },
+    {
+      "endereco": "Av. Dr. Julio Cesar",
+      "numero": "12",
+      "complemento": "ap01",
+      "formaPagamento": "debito",
+      "id": 6
+    },
+    {
+      "endereco": "Av. Dr. Julio Cesar",
+      "numero": "12",
+      "complemento": "ap01",
+      "formaPagamento": "debito",
+      "id": 7
+    },
+    {
+      "endereco": "aaaaa",
+      "numero": "12",
+      "complemento": null,
+      "formaPagamento": "debito",
+      "id": 8
+    },
+    {
+      "endereco": "Rua A",
+      "numero": "172",
+      "complemento": null,
+      "formaPagamento": "dinheiro",
+      "id": 9
+    },
+    {
+      "endereco": "Rua Almeida",
+      "numero": "12",
+      "complemento": "casa",
+      "formaPagamento": "dinheiro",
+      "id": 10
+    },
+    {
+      "endereco": "Rua B",
+      "numero": "11",
+      "complemento": "b",
+      "formaPagamento": "debito",
+      "id": 11
     }
   ]
 }

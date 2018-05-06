@@ -1,7 +1,9 @@
 <div class="container">
-  <div class="ordem-compra">
-    <!-- Property Biding que relaciona o atributo referente ao formulário ao seu respectivo formulario -->
-    <form [formGroup]="formulario" novalidate>
+  <!-- Caso o IdPedidoCompra for igual undefined o formulariio é impresso, quando ele for definido irá aparecer o conteudo da div de sucesso -->
+  <div class="ordem-compra" *ngIf="idPedidoCompra === undefined">
+    <!-- Property Biding que relaciona o atributo referente ao formulário ao seu respectivo formulario - 
+    (ngSubmit) submete o formulário e executa o método 'confirmarCompra()'-->
+    <form [formGroup]="formulario" novalidate (ngSubmit)='confirmarCompra()'>
     
       <h5>Sua Compra</h5>
       <hr />
@@ -71,28 +73,33 @@
         <!-- formControlName relaciona os campos do formulario com seu respectivo atributo de FormControl -->
         <div class="form-group col-md-6">
           <input 
+            id="idEndereco"
             type="text" 
             class="form-control" 
             placeholder="Endereço" 
             autocomplete="off"
             formControlName="endereco"
           >
-          <small class="form-text text-success">Ok</small>
+          <small *ngIf="formulario.get('endereco').valid && formulario.get('endereco').touched" class="form-text text-success">Ok!</small>
+          <small *ngIf="!formulario.get('endereco').valid && formulario.get('endereco').touched" class="form-text text-danger">Endereço Inválido!</small>
         </div>
 
         <div class="form-group col-md-2">
           <input 
+            id="idNumero"
             type="text" 
             class="form-control" 
             placeholder="Número" 
             autocomplete="off"
             formControlName="numero"
           >
-          <small class="form-text text-success">Ok</small>
+          <small *ngIf="formulario.get('numero').valid && formulario.get('numero').touched" class="form-text text-success">Ok!</small>
+          <small *ngIf="!formulario.get('numero').valid && formulario.get('numero').touched" class="form-text text-danger">Número Inválido!</small>
         </div>
 
         <div class="form-group col-md-4">
           <input 
+            id="idComplemento"
             type="text" 
             class="form-control" 
             placeholder="Complemento" 
@@ -111,6 +118,7 @@
           
         <div class="form-group col-md-3">
           <select 
+            id="idFormaPagamento"
             class="form-control"
             formControlName="formaPagamento"
           >
@@ -118,7 +126,8 @@
             <option value="dinheiro">Dinheiro</option>
             <option value="debito">Débito</option>
           </select>
-          <small class="form-text text-success">Ok</small>
+          <small *ngIf="formulario.get('formaPagamento').valid && formulario.get('formaPagamento').touched" class="form-text text-success">Ok!</small>
+          <small *ngIf="!formulario.get('formaPagamento').valid && formulario.get('formaPagamento').touched" class="form-text text-danger">Forma de Pagamento Inválida!</small>
         </div>
       </div>
 
@@ -128,5 +137,9 @@
         class="btn btn-primary btn-lg"
       >Cofirmar compra</button>
     </form>
+  </div>
+
+  <div class="ordem-compra" *ngIf="idPedidoCompra !== undefined">
+    <apu-ordem-compra-sucesso [idPedidoCompra]=idPedidoCompra></apu-ordem-compra-sucesso>
   </div>
 </div>

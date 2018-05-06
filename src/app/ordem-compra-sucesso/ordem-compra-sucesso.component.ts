@@ -7,6 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class OrdemCompraSucessoComponent implements OnInit {
 
+  //Indica que este componente espera um parâmetro de seu componente pai
   @Input() public idPedidoCompra: number;
 
   constructor() { }
