@@ -6,6 +6,8 @@ import { OfertasService } from '../ofertas.service'
 
 import { Oferta } from '../shared/oferta.model'
 
+import { CarrinhoService } from '../carrinho.service'
+
 /*
 //Import do observable para programação reativa
 import { Observable } from 'rxjs/Observable';
@@ -18,7 +20,7 @@ import { Subscription } from 'rxjs/Subscription';
   selector: 'apu-oferta',
   templateUrl: './oferta.component.html',
   styleUrls: ['./oferta.component.css'],
-  providers: [OfertasService]
+  providers: [ OfertasService ]
 })
 export class OfertaComponent implements OnInit /*, OnDestroy*/ {
 
@@ -32,18 +34,20 @@ export class OfertaComponent implements OnInit /*, OnDestroy*/ {
   //Nesse caso já é criado automaticamente um atributo route que recebe os valores
   // da classe ActivatedRout, no momento de construção do componente ele recebe o objeto de rotas
   // que o Angular estiver usando 
-  constructor(private route: ActivatedRoute, 
-    private ofertasService: OfertasService) {}
+  constructor(private route: ActivatedRoute,
+    private ofertasService: OfertasService,
+    private carrinhoService: CarrinhoService) { }
 
-    public oferta: Oferta;
+  public oferta: Oferta;
 
   ngOnInit() {
+    console.log("Array de Itens: " + this.carrinhoService.exibirItens());
     //Snaptshot (faz uma copia da rota)
     //console.log("ID recuperado pela rota: ", this.route.snapshot.params['id']);
-    
+
     //Subscribe (programação reativa - fica "escutando" alguma mudança na rota)
     //this.route.params.subscribe((parametro: any) => {
-      //console.log(parametro.id);
+    //console.log(parametro.id);
     //});
 
     //Combinação de Observable com Promisse, então, o subscrible fica escutando alguma alteração
@@ -52,11 +56,11 @@ export class OfertaComponent implements OnInit /*, OnDestroy*/ {
     this.route.params.subscribe((parametros: Params) => {
       this.ofertasService.getOfertaPorId(parametros.id)
         .then((resposta: Oferta) => {
-        this.oferta = resposta;
-      });
+          this.oferta = resposta;
+        });
     });
 
-    
+
 
     /* Observable
     this.route.params.subscribe(
@@ -107,5 +111,10 @@ export class OfertaComponent implements OnInit /*, OnDestroy*/ {
     this.tempoObservableSubscription.unsubscribe()
   }
 */
-}
+  }
+
+  public adicionarItenCarrinho(): void {
+    this.carrinhoService.incluirItem(this.oferta);
+    console.log(this.carrinhoService.exibirItens());
+  }
 }

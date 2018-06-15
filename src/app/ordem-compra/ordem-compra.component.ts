@@ -3,15 +3,19 @@ import { OrdemCompraService } from '../ordem-compra.service'
 import { Pedido } from '../shared/pedido.model'
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
+import { CarrinhoService } from '../carrinho.service'
+import { ItemCarrinho } from '../shared/item-carrinho.model';
+
 @Component({
   selector: 'app-ordem-compra',
   templateUrl: './ordem-compra.component.html',
   styleUrls: ['./ordem-compra.component.css'],
-  providers: [OrdemCompraService]
+  providers: [ OrdemCompraService ]
 })
 export class OrdemCompraComponent implements OnInit {
 
   public idPedidoCompra: number = undefined;
+  public itensCarrinho: ItemCarrinho[] = [];
 
   //Cria um objeto que corresponde a um formulário e seus respectivos campos (FormControl)
   public formulario: FormGroup = new FormGroup({
@@ -22,10 +26,13 @@ export class OrdemCompraComponent implements OnInit {
     'formaPagamento': new FormControl(null, [Validators.required])
   });
 
-  constructor(private ordemCompraService: OrdemCompraService) { }
+  //Observação: Uma vez que um componente não esteja sendo definido no provider do componente atual, cabe ao angular
+  //procurar este componente no app.module.ts para assim saber que o componente é global (singleton).
+  constructor(private ordemCompraService: OrdemCompraService, private carrinhoService: CarrinhoService) { }
 
   ngOnInit() {
-
+    this.itensCarrinho = this.carrinhoService.exibirItens();
+    console.log(this.itensCarrinho);
   }
 
   public confirmarCompra(): void {

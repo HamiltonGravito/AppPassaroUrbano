@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser'
-import { NgModule } from '@angular/core'
+import { NgModule, LOCALE_ID } from '@angular/core'
 
 //Importa o modulo do HTTP para requisições REST
 import { HttpModule } from '@angular/http'
@@ -29,6 +29,9 @@ import { OrdemCompraComponent } from './ordem-compra/ordem-compra.component'
 import { DescricaoReduzida } from './util/descricao-reduzida.pipe';
 import { OrdemCompraSucessoComponent } from './ordem-compra-sucesso/ordem-compra-sucesso.component'
 
+//
+import { CarrinhoService } from './carrinho.service'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,7 +58,7 @@ import { OrdemCompraSucessoComponent } from './ordem-compra-sucesso/ordem-compra
     RouterModule.forRoot(ROUTES)
   ],
   //Serviços definidos nesse nível são uados por toda a aplicação
-  providers: [],
+  providers: [CarrinhoService, { provide: LOCALE_ID, useValue: 'en-US'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
