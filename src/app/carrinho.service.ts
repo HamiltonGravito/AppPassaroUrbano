@@ -36,6 +36,32 @@ class CarrinhoService {
 
         return total;
     }
+
+    public adicionarQuantidade(itemCarrinho: ItemCarrinho): void {
+        console.log(itemCarrinho);
+
+        //Incrementar Quantidade
+        let itemCarrinhoEncontrado = this.itens.find((item: ItemCarrinho) => item.id === itemCarrinho.id);
+        if(itemCarrinhoEncontrado){
+            itemCarrinhoEncontrado.quantidade += 1;
+        }else {
+
+        }
+    }
+
+    public diminuirQuantidade(itemCarrinho: ItemCarrinho): void {
+        let itemCarrinhoEncontrado = this.itens.find((item: ItemCarrinho) => item.id === itemCarrinho.id );
+        if(itemCarrinhoEncontrado && itemCarrinhoEncontrado.quantidade > 1){
+            itemCarrinhoEncontrado.quantidade -= 1;
+        }else {
+            //indexOf encontra o item a ser removido e splice recorta esse item do array e remove uma instancia do mesmo.
+            this.itens.splice(this.itens.indexOf(itemCarrinhoEncontrado), 1);
+        }
+    }
+
+    public limparCarrinho(): void {
+        this.itens = [];
+    }
 }
 
 export { CarrinhoService }
