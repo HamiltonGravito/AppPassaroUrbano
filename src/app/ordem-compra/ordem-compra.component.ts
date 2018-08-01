@@ -1,141 +1,86 @@
 import { Component, OnInit } from '@angular/core';
-
-//Serviço - 1ºPasso: Inserir classe de Serviço
 import { OrdemCompraService } from '../ordem-compra.service'
+import { Pedido } from '../shared/pedido.model'
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-//Formar Pedido - 1ºPasso: Importar o modelo
-import { Pedido } from '../shared/pedido.model';
+import { CarrinhoService } from '../carrinho.service'
+import { ItemCarrinho } from '../shared/item-carrinho.model';
 
 @Component({
-  selector: 'apu-ordem-compra',
+  selector: 'app-ordem-compra',
   templateUrl: './ordem-compra.component.html',
   styleUrls: ['./ordem-compra.component.css'],
-  //Serviço - 2ºPasso: Prover o Serviço
-  providers: [OrdemCompraService]
+  providers: [ OrdemCompraService ]
 })
 export class OrdemCompraComponent implements OnInit {
 
-  public idPedidoCompra: number;
+  public idPedidoCompra: number = undefined;
+  public itensCarrinho: ItemCarrinho[] = [];
 
-  //Formar Pedido - 2º Passo: Instanciar um novo pedido
-  public pedido: Pedido;
+  //Cria um objeto que corresponde a um formulário e seus respectivos campos (FormControl)
+  public formulario: FormGroup = new FormGroup({
+    //FormControl - Parametros: 1 - Valor Inicial | 2 - Array de Validadores | 3 - Validadores Assicronos
+    'endereco': new FormControl(null, [Validators.required, Validators.minLength(5), Validators.maxLength(120)]),
+    'numero': new FormControl(null, [Validators.required, Validators.minLength(1), Validators.maxLength(5)]),
+    'complemento': new FormControl(null),
+    'formaPagamento': new FormControl(null, [Validators.required])
+  });
 
-  public endereco: string = null;
-  public numero: number = null;
-  public complemento: string = null;
-  public formaPagamento: string = null;
-
-  public formEstado: string = "disabled";
-
-  //Atributos de controle de validação dos campos
-  public enderecoValido: boolean;
-  public numeroValido: boolean;
-  public complementoValido: boolean;
-  public formaPagamentoValida: boolean;
-
-  //Atributos de controle de estado primitivo dos campos (pristine)
-  public enderecoEstadoPrimitivo: boolean = true;
-  public numeroEstadoPrimitivo: boolean = true;
-  public complementoEstadoPrimitivo: boolean = true;
-  public formaPagamentoEstadoPrimitivo: boolean = true;
-
-  //Serviço - 3ºPasso: Injetar o serviço a partir do construtor
-  constructor(private ordemCompraService: OrdemCompraService) { }
+  //Observação: Uma vez que um componente não esteja sendo definido no provider do componente atual, cabe ao angular
+  //procurar este componente no app.module.ts para assim saber que o componente é global (singleton).
+  constructor(private ordemCompraService: OrdemCompraService, private carrinhoService: CarrinhoService) { }
 
   ngOnInit() {
-    //this.ordemCompraService.efetivarCompra();
-  }
-
-  public atualizaEndereco(endereco: string) : void {
-    this.endereco = endereco;
-    this.enderecoEstadoPrimitivo = false;
-    //validação do endereco
-    if(this.endereco.length > 4 && this.endereco.includes("Rua") || this.endereco.includes("Avenida") || this.endereco.includes("Travessa") || this.endereco.includes("Praça") || this.endereco.includes("Alameda")){
-      this.enderecoValido = true;
-    } else {
-      this.enderecoValido = false;
-    }
-
-    this.habilitaForm();
-  }
-
-  public atualizaNumero(numero: number) : void {
-    this.numero = numero;
-    this.numeroEstadoPrimitivo = false;
-    //validação do numero - Is Not a Number, ou seja, false se for uma sequencia de numeros e verdadeiros se for string
-    if(!isNaN(this.numero) && this.numero > 0){
-      this.numeroValido = true;
-    } else {
-      this.numeroValido = false;
-    }
-
-    this.habilitaForm();
-  }
-
-  public atualizaComplemento(complemento: string) : void {
-    this.complemento = complemento;
-    this.complementoEstadoPrimitivo = false;
-    //validação complemento
-    if(this.complemento.length > 0){
-      this.complementoValido = true;
-    } else {
-      this.complementoValido = false;
-    }
-
-    this.habilitaForm();
-  }
-
-  public atualizaFormaPagamento(formaPagamento: string) : void {
-    this.formaPagamento = formaPagamento;
-    this.formaPagamentoEstadoPrimitivo = false;
-    //validação formaPagamento
-    if(this.formaPagamento !== ""){
-      this.formaPagamentoValida = true;
-    } else {
-      this.formaPagamentoValida = false;
-    }
-
-    this.habilitaForm();
-  }
-
-  public habilitaForm(): void {
-    if( this.enderecoValido === true &&
-        this.numeroValido === true &&
-        this.formaPagamentoValida === true
-    ){
-      this.formEstado = '';
-    } else {
-      this.formEstado = 'disabled';
-    }
+    this.itensCarrinho = this.carrinhoService.exibirItens();
+    console.log(this.itensCarrinho);
   }
 
   public confirmarCompra(): void {
-    this.pedido = new Pedido(
-      this.endereco,
-      this.numero,
-      this.complemento,
-      this.formaPagamento
-    );
-    this.ordemCompraService.efetivarCompra(this.pedido)
-    .subscribe((idPedido: number) => {
-      this.idPedidoCompra = idPedido});
-    this.iniciarComponentes();
+    if(this.formulario.status === "INVALID") {
+
+      if (!this.formulario.get('endereco').valid) {
+        this.formulario.get('endereco').markAsTouched();
+        this.focar('idEndereco');
+      } else if (!this.formulario.get('numero').valid) {
+        this.formulario.get('numero').markAsTouched();
+        this.focar('idNumero');
+      } else if (!this.formulario.get('formaPagamento').valid) {
+        this.formulario.get('formaPagamento').markAsTouched();
+        this.focar('idFormaPagamento');
+      }
+    } else {
+
+      if(this.carrinhoService.exibirItens().length === 0){
+        alert("Você não selecionou nenhum item!")
+      }else{
+
+      let pedido: Pedido = new Pedido (
+        this.formulario.value.endereco,
+        this.formulario.value.numero,
+        this.formulario.value.complemento,
+        this.formulario.value.formaPagamento,
+        this.carrinhoService.exibirItens());
+
+        console.log(pedido);
+      //Como o metodo retorna um observable precisa fazer um subscribe
+      this.ordemCompraService.efetivarCompra(pedido)
+      .subscribe((idPedido: number) => {
+        this.idPedidoCompra = idPedido;
+        this.carrinhoService.limparCarrinho();
+        });
+      }
+    }
   }
 
-  public iniciarComponentes(): void {
-    this.enderecoValido = false;
-    this.enderecoEstadoPrimitivo = true;
-    this.endereco = "";
-    this.numeroValido = false;
-    this.numeroEstadoPrimitivo = true;
-    this.numero = null;
-    this.complementoValido = false;
-    this.complementoEstadoPrimitivo = true;
-    this.complemento = "";
-    this.formaPagamentoValida = false;
-    this.formaPagamentoEstadoPrimitivo = true;
-    this.formaPagamento = "";
-    this.formEstado = 'disabled';
+  public adicionar(item: ItemCarrinho): void {
+    this.carrinhoService.adicionarQuantidade(item);
   }
 
+  public diminuir(item: ItemCarrinho): void {
+    this.carrinhoService.diminuirQuantidade(item);
+  }
+
+  public focar(campo: string): void {
+    document.getElementById(campo).focus();
+  }
 }

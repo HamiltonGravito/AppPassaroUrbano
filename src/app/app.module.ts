@@ -1,11 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser'
-import { NgModule } from '@angular/core'
+import { NgModule, LOCALE_ID } from '@angular/core'
 
 //Importa o modulo do HTTP para requisições REST
 import { HttpModule } from '@angular/http'
 
 //Importa o modulo de rotas
 import { RouterModule } from '@angular/router'
+
+//Importa o modulo para trabalhar com formularios de forma reativa
+import { ReactiveFormsModule } from '@angular/forms'
+
 //Importa a constante ROUTES com as rotas definidas
 import { ROUTES } from './app.routes'
 
@@ -25,6 +29,9 @@ import { OrdemCompraComponent } from './ordem-compra/ordem-compra.component'
 import { DescricaoReduzida } from './util/descricao-reduzida.pipe';
 import { OrdemCompraSucessoComponent } from './ordem-compra-sucesso/ordem-compra-sucesso.component'
 
+//
+import { CarrinhoService } from './carrinho.service'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,12 +50,15 @@ import { OrdemCompraSucessoComponent } from './ordem-compra-sucesso/ordem-compra
   imports: [
     BrowserModule,
     HttpModule,
+    //A partir do momento que temos a abordagem do uso de ReactiveForms no contexto do modulo,
+    //se existir um formulário dentro do template de algum modulo o angula tentará interpretar isso. 
+    ReactiveFormsModule,
     //forRoot - Mapeamento GLOBAL
     //forChild - Rotas Internas de Componentes
     RouterModule.forRoot(ROUTES)
   ],
   //Serviços definidos nesse nível são uados por toda a aplicação
-  providers: [],
+  providers: [CarrinhoService, { provide: LOCALE_ID, useValue: 'en-US'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

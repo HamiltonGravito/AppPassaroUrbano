@@ -1,136 +1,92 @@
 <div class="container">
+  <!-- Caso o IdPedidoCompra for igual undefined o formulariio é impresso, quando ele for definido irá aparecer o conteudo da div de sucesso -->
   <div class="ordem-compra" *ngIf="idPedidoCompra === undefined">
-    <form novalidate>
+    <!-- Property Biding que relaciona o atributo referente ao formulário ao seu respectivo formulario - 
+    (ngSubmit) submete o formulário e executa o método 'confirmarCompra()'-->
+    <form [formGroup]="formulario" novalidate (ngSubmit)='confirmarCompra()'>
     
       <h5>Sua Compra</h5>
       <hr />
-
-      <div class="form-row" style="background: #FAFAFA; padding: 20px; border-bottom: solid 1px #F0F0F0">
+    <div *ngIf="carrinhoService.exibirItens().length; else carrinhoVazio">
+      <div *ngFor="let item of itensCarrinho" class="form-row" style="background: #FAFAFA; padding: 20px; border-bottom: solid 1px #F0F0F0">
         <div class="form-group col-sm-1">
-          <img src="/assets/ofertas/1/img1.jpg" class="img-fluid">
+          <img [src]="item.img.url" class="img-fluid">
         </div>
         <div class="form-group col-sm-6">
-          Super Burger
+          {{ item.titulo }}
           <br />
-          Rodízio de Mini-hambúrger com opção de entrada.
+          {{ item.descricao_oferta }}
         </div>
 
         <div>
           <div class="row">
             <div class="col">
-              <button type="button" class="btn btn-link">-</button>
-              1
-              <button type="button" class="btn btn-link">+</button>
+              <button (click)="diminuir(item)" type="button" class="btn btn-link">-</button>
+              {{ item.quantidade }}
+              <button (click)="adicionar(item)" type="button" class="btn btn-link">+</button>
             </div>
           </div>
         </div>
 
         <div class="form-group col-sm-3 d-flex justify-content-end">
-          29.90
-        </div>
-      </div>
-      
-      <div class="form-row" style="background: #FAFAFA; padding: 20px; border-bottom: solid 1px #F0F0F0">
-        <div class="form-group col-sm-1">
-          <img src="/assets/ofertas/4/img1.jpg" class="img-fluid">
-        </div>
-        <div class="form-group col-sm-6">
-          Estância das águas
-          <br />
-          Diversão garantida com piscinas, trilhas e muito mais.
-        </div>
-
-        <div>
-          <div class="row">
-            <div class="col">
-              <button type="button" class="btn btn-link">-</button>
-              1
-              <button type="button" class="btn btn-link">+</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group col-sm-3 d-flex justify-content-end">
-          31.90
+          {{ item.quantidade * item.valor | currency: 'BRL': true}}
         </div>
       </div>
       
       <div class="form-row">
         <div class="form-group col d-flex justify-content-end">
-          <h4>Total do pedido: 61.80</h4>
+          <h4>Total do pedido: {{ carrinhoService.totalCarrinhoCompras() | currency: 'BRL': true }}</h4>
         </div>
       </div>
+    </div>
       <br />
-
+    <ng-template #carrinhoVazio>
+      <div class="form-row d-flex justify-content-center" style="background: #FAFAFA; padding: 20px; border-bottom: solid 1px #F0F0F0">
+        Seu carrinho esta vazio!!! Não perca tempo e aproveite as ofertas.
+      </div>
+    </ng-template>
 
       <h5>Dados de entrega</h5>
       <hr />
 
       <div class="form-row">
 
-        <!-- [value]="endereco" - Nesse caso usa-se PropertiBinding
-        para sincronizar o valor do campo à variável endereco em ordem-compra.component.ts.
-        Enquanto que usa-se um eventBiding () para armazenar o valor do campo a variavel,
-        obs.: #inputEndereco é uma variável de referencia do template que recupera os dados dentro do contexto -->
+        <!-- formControlName relaciona os campos do formulario com seu respectivo atributo de FormControl -->
         <div class="form-group col-md-6">
           <input 
+            id="idEndereco"
             type="text" 
-            class="form-control {{ enderecoEstadoPrimitivo ? '' : (enderecoValido ? 'is-valid' : 'is-invalid') }}" 
-            placeholder="Alameda..., Avenida..., Rua..., Travessa... ou Praça... " 
-            autocomplete="off" 
-            minlength="5" 
-            required
-            [value]="endereco"
-            #inputEndereco
-            (input)="atualizaEndereco(inputEndereco.value)" />
-        
-            <div *ngIf="enderecoEstadoPrimitivo == false">
-              <div *ngIf="enderecoValido; else msgEnderecoInvalido">
-                <small class="form-text text-success">Ok</small>
-              </div>
-              <ng-template #msgEnderecoInvalido>
-                  <small class="form-text text-danger">Endereço Inválido</small>
-              </ng-template>
-            </div>
-          </div>
+            class="form-control" 
+            placeholder="Endereço" 
+            autocomplete="off"
+            formControlName="endereco"
+          >
+          <small *ngIf="formulario.get('endereco').valid && formulario.get('endereco').touched" class="form-text text-success">Ok!</small>
+          <small *ngIf="!formulario.get('endereco').valid && formulario.get('endereco').touched" class="form-text text-danger">Endereço Inválido!</small>
+        </div>
 
         <div class="form-group col-md-2">
           <input 
+            id="idNumero"
             type="text" 
-            class="form-control {{ numeroEstadoPrimitivo ? '' : (numeroValido ? 'is-valid' : 'is-invalid') }}" 
+            class="form-control" 
             placeholder="Número" 
-            autocomplete="off" 
-            minlength="1" 
-            required
-            [value]="numero"
-            #inputNumero
-            (input)="atualizaNumero(inputNumero.value)">
-         
-            <div *ngIf="numeroEstadoPrimitivo == false">
-                <div *ngIf="numeroValido; else msgNumeroInvalido">
-                  <small class="form-text text-success">Ok</small>
-                </div>
-                <ng-template #msgNumeroInvalido>
-                    <small class="form-text text-danger">Número Inválido</small>
-                </ng-template>
-              </div>
+            autocomplete="off"
+            formControlName="numero"
+          >
+          <small *ngIf="formulario.get('numero').valid && formulario.get('numero').touched" class="form-text text-success">Ok!</small>
+          <small *ngIf="!formulario.get('numero').valid && formulario.get('numero').touched" class="form-text text-danger">Número Inválido!</small>
         </div>
 
         <div class="form-group col-md-4">
           <input 
+            id="idComplemento"
             type="text" 
-            class="form-control {{ complementoEstadoPrimitivo ? '' : (complementoValido ? 'is-valid' : 'is-invalid') }}" 
+            class="form-control" 
             placeholder="Complemento" 
             autocomplete="off"
-            [value]="complemento"
-            #inputComplemento
-            (input)="atualizaComplemento(inputComplemento.value)" />
-
-            <div *ngIf="complementoEstadoPrimitivo == false">
-                <div *ngIf="complementoValido">
-                  <small class="form-text text-success">Ok</small>
-                </div>
-              </div>
+            formControlName="complemento"
+          >
         </div>
 
       </div>
@@ -140,42 +96,31 @@
       <hr />
 
       <div class="form-row">
-        
-        <!-- value="..." selected={{Comparar através de testes condicionais dentro da String Interpolation
-        qual opção irá receber o selected e caso não o retorno será uma string vazia}}
-        change - Evento ao qual um select responde e quanto a variável de referencia irá recuperar como value
-        selected == selected -->
+          
         <div class="form-group col-md-3">
-          <select class="form-control {{ formaPagamentoEstadoPrimitivo ? '' : (formaPagamentoValida ? 'is-valid' : 'is-invalid') }}"
-          #selectFormaPagamento
-          (change)="atualizaFormaPagamento(selectFormaPagamento.value)">
+          <select 
+            id="idFormaPagamento"
+            class="form-control"
+            formControlName="formaPagamento"
+          >
             <option value="">Selecione uma opção</option>
-            <option value="dinheiro" selected="{{ formaPagamento == 'dinheiro' ? 'selected' : '' }}">Dinheiro</option>
-            <option value="debito" selected="{{ formaPagamento == 'debito' ? 'selected' : '' }}">Débito</option>
+            <option value="dinheiro">Dinheiro</option>
+            <option value="debito">Débito</option>
           </select>
-
-          <div *ngIf="formaPagamentoEstadoPrimitivo == false">
-              <div *ngIf="formaPagamentoValida; else msgFormaPagamentoInvalida">
-                <small class="form-text text-success">Ok</small>
-              </div>
-              <ng-template #msgFormaPagamentoInvalida>
-                  <small class="form-text text-danger">Insira uma forma de pagamento.</small>
-              </ng-template>
-            </div>
+          <small *ngIf="formulario.get('formaPagamento').valid && formulario.get('formaPagamento').touched" class="form-text text-success">Ok!</small>
+          <small *ngIf="!formulario.get('formaPagamento').valid && formulario.get('formaPagamento').touched" class="form-text text-danger">Forma de Pagamento Inválida!</small>
         </div>
       </div>
 
       <hr />
-      <!-- EventBiding de (click) que dispara o método de confirmarCompra() -->
-      <button type="button" 
-        class="btn btn-primary btn-lg" 
-        [disabled]="formEstado"
-        (click)="confirmarCompra()"
-        >Cofirmar compra</button>
+      <button 
+        type="submit" 
+        class="btn btn-primary btn-lg"
+      >Cofirmar compra</button>
     </form>
   </div>
 
   <div class="ordem-compra" *ngIf="idPedidoCompra !== undefined">
-    <apu-ordem-compra-sucesso [idPedidoCompra]="idPedidoCompra"></apu-ordem-compra-sucesso>
+    <apu-ordem-compra-sucesso [idPedidoCompra]=idPedidoCompra></apu-ordem-compra-sucesso>
   </div>
 </div>
